@@ -1,0 +1,78 @@
+<html>
+<head>
+  <title>Underscore Bare</title>
+  <style type="text/css">
+    #templates { display: none; }
+    #scores .item {
+      background: #ddd;
+      padding: 1px 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+<div id="userinput">
+  <form>
+    <label for="scorersname"> Scorer's Name: </label>
+    <input id='scorersname' type="text" name="scorersname"></label><br>
+    <label for="scorersscore">Score</label>
+    <input id='scorersscore' type='integer' name="scorersscore"> <br>
+    <input id='scorebutton' type='submit' value="scorebutton" name='scorebutton'>
+  </form>
+</div>
+
+<div id='newstoregame'>
+  <div class='game'>
+    <p>token - 1</p>
+  </div>
+</div>
+
+<div id="templates">
+  <script class="item" type="text/template">
+    <div class="item">
+      <p><%= name %> - $<%= price %></p>
+    </div>
+  </script>
+</div>
+
+<div id="templates">
+  <script class="game" type="text/template">
+    <div class="game">
+      <p><%= name %> - <%= score %></p>
+    </div>
+  </script>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+<script type="text/javascript">
+  // TODO
+  var itemTemplateHtml = $('#templates .item').html();
+  var itemTemplate = _.template(itemTemplateHtml);
+  var newItemHtml = itemTemplate({ name: 'Date', price: 0.15 });
+  $('#store').append(newItemHtml);
+  var scores = [
+    { name: "Johnny", score: 10},
+    { name: "David", score: 5},
+    { name: "Nathan", score: 3}
+  ];
+  var gameTemplateHtml = $('#templates .game').html();
+  var gameTemplate = _.template(gameTemplateHtml);
+  for (var i=0;i<scores.length;i++) {
+    var newGameHtml = gameTemplate({ name: scores[i]['name'], score: scores[i]['score']});
+    $('#newstoregame').append(newGameHtml)
+  }
+  $('#scorebutton').on('click', function (e) {
+    e.preventDefault();
+    var newname = document.getElementById("scorersname").value
+    var newscore = document.getElementById("scorersscore").value
+    var newGameHtml = gameTemplate({ name: newname, score: newscore});
+    $('#newstoregame').append(newGameHtml)
+  });
+
+</script>
+
+</body>
+</html>
